@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.logo img {
+    height: 80px;
+}
+
+nav {
+    background: #2596be;
+    padding: 10px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    background: #e6f2ff;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    background: #2596be;
+    color: white;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.home {
+    width: 55%;
+    text-align: center;
+}
+
+.home img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.announcements {
+    background: white;
+    color: red;
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 15px;
+}
+
+.logo img {
+    height: 80px;
+}
+
+.institute-name h1 {
+    font-size: 24px;
+    color: #003366;
+    margin-left: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
