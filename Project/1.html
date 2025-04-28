@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Bank App</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .box { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; border-radius: 8px; max-width: 400px; }
+    input, button { margin-top: 10px; width: 100%; padding: 10px; }
+  </style>
+</head>
+<body>
+  <h2>🏦 Simple Web Bank App</h2>
+
+  <div class="box">
+    <h3>Register</h3>
+    <input type="text" id="regUser" placeholder="User ID">
+    <input type="password" id="regPass" placeholder="Password">
+    <button onclick="register()">Register</button>
+  </div>
+
+  <div class="box">
+    <h3>Login</h3>
+    <input type="text" id="loginUser" placeholder="User ID">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div id="dashboard" style="display:none" class="box">
+    <h3>Welcome, <span id="currentUser"></span></h3>
+    <p><b>Balance:</b> ₹<span id="balance">0</span></p>
+    <input type="number" id="amount" placeholder="Amount">
+    <button onclick="deposit()">Deposit</button>
+    <button onclick="withdraw()">Withdraw</button>
+    <br><br>
+    <input type="text" id="receiver" placeholder="Receiver ID">
+    <button onclick="transfer()">Transfer</button>
+    <button onclick="logout()">Logout</button>
+    <h4>History:</h4>
+    <ul id="history"></ul>
+  </div>
+
+  <script>
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    let currentUser = null;
+
+    function saveUsers() {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    function register() {
+      const user = document.getElementById('regUser').value;
+      const pass = document.getElementById('regPass').value;
+      if (users[user]) return alert('User already exists!');
+      users[user] = { password: pass, balance: 0, history: [] };
+      saveUsers();
+      alert('Registered successfully!');
+    }
+
+    function login() {
+      const user = document.getElementById('loginUser').value;
+      const pass = document.getElementById('loginPass').value;
+      if (!users[user] || users[user].password !== pass) return alert('Invalid login!');
+      currentUser = user;
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('currentUser').innerText = user;
+      updateDashboard();
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById('dashboard').style.display = 'none';
+    }
+
+    function updateDashboard() {
+      const user = users[currentUser];
+      document.getElementById('balance').innerText = user.balance;
+      const historyList = document.getElementById('history');
+      historyList.innerHTML = '';
+      user.history.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        historyList.appendChild(li);
+      });
+    }
+
+    function deposit() {
+      const amt = parseFloat(document.getElementById('amount').value);
+      if (amt > 0) {
+        users[currentUser].balance += amt;
+        users[currentUser].history.push(`Deposited ₹${amt}`);
+        saveUsers();
+        updateDashboard();
+      }
+    }
+
+    function withdraw() {
+      const amt = parseFloat(document.getElementById('amount').value);
+      if (amt > 0 && users[currentUser].balance >= amt) {
+        users[currentUser].balance -= amt;
+        users[currentUser].history.push(`Withdrew ₹${amt}`);
+        saveUsers();
+        updateDashboard();
+      } else {
+        alert('Insufficient balance.');
+      }
+    }
+
+    function transfer() {
+      const receiver = document.getElementById('receiver').value;
+      const amt = parseFloat(document.getElementById('amount').value);
+      if (!users[receiver]) return alert('Receiver not found');
+      if (amt > 0 && users[currentUser].balance >= amt) {
+        users[currentUser].balance -= amt;
+        users[receiver].balance += amt;
+        users[currentUser].history.push(`Transferred ₹${amt} to ${receiver}`);
+        users[receiver].history.push(`Received ₹${amt} from ${currentUser}`);
+        saveUsers();
+        updateDashboard();
+      } else {
+        alert('Transfer failed.');
+      }
+    }
+  </script>
+</body>
+</html>

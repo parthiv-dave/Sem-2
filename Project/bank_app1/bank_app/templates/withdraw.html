@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Withdraw Funds</h2>
+<form method="POST">
+    <input type="number" name="amount" placeholder="Enter amount" required>
+    <button type="submit">Withdraw</button>
+</form>
+<a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+{% endblock %}

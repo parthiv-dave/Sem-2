@@ -1,0 +1,27 @@
+{% extends 'bankapp/base.html' %}
+{% block content %}
+<div class="dashboard-box">
+    <h2>Welcome, {{ user.username }}</h2>
+    <p><strong>Balance:</strong> ${{ balance }}</p>
+
+    <div class="dashboard-links">
+        <a href="{% url 'deposit' %}">💰 Deposit</a>
+        <a href="{% url 'withdraw' %}">💸 Withdraw</a>
+        <a href="{% url 'transfer' %}">🔁 Transfer</a>
+        <a href="{% url 'logout' %}">🚪 Logout</a>
+    </div>
+
+    <div class="transaction-list">
+        <h3>Recent Transactions</h3>
+        {% if transactions %}
+            <ul>
+                {% for t in transactions %}
+                    <li>{{ t.timestamp|date:"Y-m-d H:i" }} - {{ t.action }} ${{ t.amount }} {% if t.note %}({{ t.note }}){% endif %}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No transactions yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

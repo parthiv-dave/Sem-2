@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-box">
+    <h2>Welcome, {{ username }}</h2>
+    <p><strong>Account Balance:</strong> ${{ balance }}</p>
+    <div class="dashboard-links">
+        <a href="{{ url_for('deposit') }}">Deposit Money</a>
+        <a href="{{ url_for('withdraw') }}">Withdraw Money</a>
+        <a href="{{ url_for('transfer') }}">Transfer Funds</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </div>
+    
+    <h3 style="margin-top: 30px;">Recent Transactions</h3>
+    {% if history %}
+        <div style="text-align: left; margin-top: 15px;">
+            <ul>
+                {% for line in history %}
+                    <li>{{ line }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <p>No transactions yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

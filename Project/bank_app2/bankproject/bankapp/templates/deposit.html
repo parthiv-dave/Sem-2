@@ -1,0 +1,10 @@
+{% extends 'bankapp/base.html' %}
+{% block content %}
+<h2>Deposit Funds</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="number" name="amount" placeholder="Amount" required>
+    <button type="submit">Deposit</button>
+</form>
+<a href="{% url 'dashboard' %}">⬅ Back to Dashboard</a>
+{% endblock %}
