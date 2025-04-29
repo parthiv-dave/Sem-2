@@ -1,0 +1,318 @@
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+    color: #333;
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background: #121212;
+    color: #e0e0e0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.nav-links a, #theme-toggle {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.nav-links a:hover, #theme-toggle:hover {
+    text-decoration: underline;
+}
+
+/* Main Content */
+main {
+    padding: 40px 20px;
+}
+
+/* Forms & Cards */
+form, .dashboard-box {
+    max-width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s, color 0.3s;
+}
+
+body.dark-mode form, body.dark-mode .dashboard-box {
+    background: #1e1e1e;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+button[type="submit"], .dashboard-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover, .dashboard-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav-links {
+        margin-top: 10px;
+    }
+    .nav-links a, #theme-toggle {
+        margin-left: 0;
+        margin-right: 10px;
+    }
+}
+
+.dashboard-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.dashboard-container h1 {
+    margin-bottom: 40px;
+    font-size: 32px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dashboard-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, background-color 0.3s;
+    text-decoration: none;
+    color: inherit;
+}
+
+body.dark-mode .dashboard-box {
+    background-color: #1e1e1e;
+}
+
+.dashboard-box:hover {
+    transform: translateY(-5px);
+    background-color: #e8f0fe;
+}
+
+body.dark-mode .dashboard-box:hover {
+    background-color: #2a2a2a;
+}
+
+.dashboard-box h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.dashboard-box p {
+    color: #555;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .form-container {
+    background-color: #1e1e1e;
+}
+
+.form-container h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.form-container form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-container form button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container form button:hover {
+    background-color: #0056b3;
+}
+
+.form-container p {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.message-container {
+    max-width: 500px;
+    margin: 60px auto;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #ffffff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .message-container {
+    background-color: #1e1e1e;
+}
+
+.message-container.success {
+    border-left: 8px solid #28a745;
+}
+
+.message-container.error {
+    border-left: 8px solid #dc3545;
+}
+
+.message-container h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.message-container p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.dashboard-btn {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.dashboard-btn:hover {
+    background-color: #0056b3;
+}
+
+.form-container textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.balance-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode .balance-container {
+    background-color: #1e1e1e;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.transaction-history {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.transaction-history li {
+    background: #f1f1f1;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+body.dark-mode .transaction-history li {
+    background: #2a2a2a;
+}
+

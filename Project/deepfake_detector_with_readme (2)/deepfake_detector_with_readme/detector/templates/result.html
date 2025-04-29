@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Result - Deepfake Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background: #0f2027;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.5s, color 0.5s;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-top: 30px;
+            text-shadow: 0 0 15px cyan;
+        }
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            z-index: 1;
+            position: relative;
+        }
+        .result-box {
+            background: rgba(0, 255, 255, 0.1);
+            border: 2px solid rgba(0, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 0 15px rgba(0,255,255,0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .result-box h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #00f260;
+        }
+        .result-box p {
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+        .media-display {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .media-display img, 
+        .media-display video {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,255,255,0.5);
+            object-fit: contain;
+        }
+        .upload-btn {
+            margin-top: 30px;
+            background: linear-gradient(45deg, #00f260, #0575e6);
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00f260;
+        }
+        .toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles.js Background -->
+    <div id="particles-js"></div>
+
+    <!-- Light/Dark Mode Toggle -->
+    <button class="toggle-mode" onclick="toggleMode()">
+        <i id="mode-icon" class="fas fa-moon"></i>
+    </button>
+
+    <div class="center-content">
+        <h1>Detection Result</h1>
+
+        <div class="result-box">
+            <h2>Analysis Summary</h2>
+            <p><strong>Prediction:</strong> {{ prediction }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}%</p>
+        </div>
+
+        <div class="result-box media-display">
+            <h2>Uploaded Media</h2>
+            {% if media_type == "image" %}
+                <img src="{{ media_url }}" alt="Uploaded Image">
+            {% else %}
+                <video controls>
+                    <source src="{{ media_url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            {% endif %}
+        </div>
+
+        <div class="result-box media-display">
+            <h2 class="heatmap-title">Manipulation Heatmap</h2>
+            <div class="heatmap-wrapper">
+                <img src="{{ heatmap_url }}" alt="Heatmap Result" class="heatmap-img">
+            </div>
+        </div>
+        
+
+        <form action="/" method="get">
+            <button type="submit" class="upload-btn">Analyze Another File</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleMode() {
+            const body = document.body;
+            const modeIcon = document.getElementById("mode-icon");
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                document.getElementById('particles-js').style.display = "none";
+                body.style.background = "linear-gradient(135deg, #d9e4f5, #ffffff)";
+                body.style.color = "#000";
+                document.querySelectorAll('.result-box').forEach(box => {
+                    box.style.background = "rgba(0, 0, 0, 0.05)";
+                    box.style.border = "2px solid rgba(0, 0, 0, 0.2)";
+                    box.style.boxShadow = "none";
+                });
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                document.getElementById('particles-js').style.display = "block";
+                body.style.background = "#0f2027";
+                body.style.color = "#fff";
+                document.querySelectorAll('.result-box').forEach(box => {
+                    box.style.background = "rgba(0, 255, 255, 0.1)";
+                    box.style.border = "2px solid rgba(0, 255, 255, 0.4)";
+                    box.style.boxShadow = "0 0 15px rgba(0,255,255,0.3)";
+                });
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        }
+
+        // Particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 70,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00f260"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.4
+                },
+                "size": {
+                    "value": 3
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00f260",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

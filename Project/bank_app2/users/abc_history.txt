@@ -1,0 +1,8 @@
+Deposited $50.00
+Withdrew $5.00
+Transferred $10.00 to abcd
+Deposited $10.00
+Withdrew $5.00
+Deposited $5.00
+Deposited $100.00
+Transferred $5.00 to abcd

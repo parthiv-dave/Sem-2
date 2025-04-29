@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deepfake Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s, color 0.5s;
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            z-index: -1;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px cyan;
+        }
+        p {
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+        .upload-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            width: 350px;
+            transition: background 0.5s;
+            z-index: 1;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            color: #fff;
+        }
+        .upload-btn {
+            background: linear-gradient(45deg, #00f260, #0575e6);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #00f260;
+        }
+        /* Toggle button */
+        .toggle-mode {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            z-index: 2;
+        }
+        /* Loader */
+        #loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: none;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particles.js container -->
+    <div id="particles-js"></div>
+
+    <!-- Light/Dark Mode Toggle -->
+    <button class="toggle-mode" onclick="toggleMode()">
+        <i id="mode-icon" class="fas fa-moon"></i>
+    </button>
+
+    <div class="center-content">
+        <h1>Deepfake Detector</h1>
+        <p>Detect Reality from Illusion</p>
+
+        <div class="upload-card">
+            <form method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+                {% csrf_token %}
+                <input type="file" name="media" required><br>
+                <button type="submit" class="upload-btn">Upload and Analyze</button>
+            </form>
+            <div id="loader"></div> <!-- Loader here -->
+        </div>
+    </div>
+
+    <script>
+        // Light/Dark mode
+        function toggleMode() {
+            const body = document.body;
+            const modeIcon = document.getElementById("mode-icon");
+            body.classList.toggle("light-mode");
+
+            if (body.classList.contains("light-mode")) {
+                document.getElementById('particles-js').style.display = "none";
+                body.style.background = "linear-gradient(135deg, #d9e4f5, #ffffff)";
+                body.style.color = "#000";
+                document.querySelector('.upload-card').style.background = "rgba(0, 0, 0, 0.05)";
+                modeIcon.classList.remove("fa-moon");
+                modeIcon.classList.add("fa-sun");
+            } else {
+                document.getElementById('particles-js').style.display = "block";
+                body.style.background = "none";
+                body.style.color = "#fff";
+                document.querySelector('.upload-card').style.background = "rgba(255, 255, 255, 0.05)";
+                modeIcon.classList.remove("fa-sun");
+                modeIcon.classList.add("fa-moon");
+            }
+        }
+
+        // Show loading animation
+        function showLoader() {
+            document.getElementById('loader').style.display = 'block';
+        }
+
+        // Initialize Particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#00f260"
+                },
+                "shape": {
+                    "type": "circle"
+                },
+                "opacity": {
+                    "value": 0.5
+                },
+                "size": {
+                    "value": 3
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#00f260",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

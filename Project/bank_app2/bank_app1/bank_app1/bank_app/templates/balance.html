@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="balance-container">
+    <h1>Your Balance</h1>
+    <p class="balance-amount">${{ balance }}</p>
+
+    <h2>Recent Transactions</h2>
+    {% if history %}
+        <ul class="transaction-history">
+            {% for item in history %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No transactions yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="dashboard-btn">⬅ Back to Dashboard</a>
+</div>
+{% endblock %}
